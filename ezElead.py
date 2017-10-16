@@ -163,17 +163,3 @@ class ELeadSession(object):
 
         return results
 
-# session_one = ELeadSession()
-# session_one.log_in(["donnaash", "Sales3"])
-# session_one.get_reports()
-#
-# print(session_one.get_report_params("213"))
-
-# test wrapper for printing out each parameter and their options--used for building out user desired forms
-# for param_num in params.keys():
-#     for label in params[param_num].keys():
-#         print(label)
-#         for option in params[param_num][label]:
-#             print(params[param_num][label][option])
-
-
