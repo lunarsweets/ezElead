@@ -1,7 +1,5 @@
 import robobrowser
 import re
-import os
-from pprint import pprint
 
 
 class LoginException(Exception):
@@ -19,6 +17,7 @@ class ELeadSession(object):
 
     def __init__(self):
         self.session = robobrowser.RoboBrowser(history=True, parser="lxml")
+        self.cookies = self.session.session.cookies
         self.reports = []
 
     def log_in(self, credential_list):  # Logs in to eLead with credentials given as a list. [0] is user, [1] is pass
@@ -36,6 +35,12 @@ class ELeadSession(object):
 
         if "not found" in browser.find("b").string:
             raise LoginException
+
+    def switch_company(self, company_id):
+        browser = self.session
+
+        browser.open("https://www.eleadcrm.com/evo2/fresh/elead-v45/elead_track/admin/SwitchCompany1.asp?"
+                     "ID={}".format(company_id))
 
     def get_reports(self):  # Gets all the available reports for the given eLead session
         browser = self.session
@@ -95,10 +100,10 @@ class ELeadSession(object):
     def get_report(self, report_num, **kwargs): # submits and parses the given report with the given parameters
         browser = self.session
 
-        if report_num in self.reports:
-            pass
-        else:
-            raise InvalidReportException
+        # if report_num in self.reports:
+        #     pass
+        # else:
+        #     raise InvalidReportException
 
         browser.open("https://www.eleadcrm.com/evo2/fresh/elead-v45/elead_track/reports"
                      "/customReport.aspx?ID={}".format(report_num))
